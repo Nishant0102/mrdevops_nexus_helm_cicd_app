@@ -1,5 +1,8 @@
 pipeline {
     agent any
+    environment {
+        VERSION = "${env.BUILD_ID}"
+    }
 
     stages {
 
@@ -27,11 +30,25 @@ pipeline {
                 }
             }
         }
-//         stage('docker build & push to nexus repo'){
-//             steps{
-//                 script{
-//     }
-//             }
-//         }
+        stage('docker build & push to nexus repo'){
+            steps{
+                script{
+                    withCredentials([string(credentialsId: 'nexus_passwd', variable: 'nexus_creds')]) {
+   
+
+
+                    sh '''
+                     docker build -t 52.87.254.15:8083/springapp:${VERSION} .
+
+                     docker login -u admin -p $nexus_creds 52.87.254.15:8083
+
+                     docker push 52.87.254.15:8083/springapp:${VERSION}
+
+                     docker rmi 52.87.254.15:8083/springapp:${VERSION}
+                    '''
+                }
+                }
+            }
+        }
     }
 }
