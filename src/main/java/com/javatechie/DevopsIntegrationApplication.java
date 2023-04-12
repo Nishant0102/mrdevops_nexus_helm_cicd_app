@@ -11,7 +11,7 @@ public class DevopsIntegrationApplication {
 
 	@GetMapping
 	public String message(){
-		return "welcome to Mr. DevOps Youtube Channel";
+		return "This is my Project which includes JENKINS, AWS, KUBERNETES, DOCKER, NEXUS, GIT HUB";
 	}
 
 	public static void main(String[] args) {
